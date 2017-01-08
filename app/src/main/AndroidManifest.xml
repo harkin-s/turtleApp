@@ -40,7 +40,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CounterActivity"></activity>
+        <activity android:name=".CounterActivity" />
+
+        <service
+            android:name=".GPSService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>
