@@ -41,8 +41,8 @@ public class MapsActivity extends FragmentActivity  implements android.location.
         try {
             String network_provider = LocationManager.NETWORK_PROVIDER;
             String gps_provider = LocationManager.GPS_PROVIDER;
-            lm.requestLocationUpdates(gps_provider, 5000, 5, this);
-            lm.requestLocationUpdates(network_provider, 5000, 5, this);
+            lm.requestLocationUpdates(gps_provider, 5000, 1, this);
+            lm.requestLocationUpdates(network_provider, 5000, 1, this);
         }
         catch (SecurityException e) {
             Log.e("GPS", "exception occured " + e.getMessage());
@@ -109,6 +109,8 @@ public class MapsActivity extends FragmentActivity  implements android.location.
                         mp.title("old position");
                         mp.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN));
                         mMap.addMarker(mp);
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+                                new LatLng(loc.latitude, loc.longitude), 16));
 
                     }
                 }
@@ -134,17 +136,17 @@ public class MapsActivity extends FragmentActivity  implements android.location.
 
     public void onLocationChanged(Location location) {
 
-        //App 2  todo: add marker to map here
-        MarkerOptions mp = new MarkerOptions();
-        mp.position(new LatLng(location.getLatitude(), location.getLongitude()));
-        mp.title("my position");
-        mMap.addMarker(mp);
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
-                new LatLng(location.getLatitude(), location.getLongitude()), 16));
-
-        LocationData loc = new LocationData(location.getLatitude(), location.getLongitude());
-
-        mDatabase.child("locations").push().setValue(loc);
+//        //App 2  todo: add marker to map here
+//        MarkerOptions mp = new MarkerOptions();
+//        mp.position(new LatLng(location.getLatitude(), location.getLongitude()));
+//        mp.title("my position");
+//        mMap.addMarker(mp);
+//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
+//                new LatLng(location.getLatitude(), location.getLongitude()), 16));
+//
+//        LocationData loc = new LocationData(location.getLatitude(), location.getLongitude());
+//
+//        mDatabase.child("locations").push().setValue(loc);
 
 
         //App 2  todo: upload location to Firebase
