@@ -39,6 +39,19 @@ $RECYCLE.BIN/
 .Trashes
 .VolumeIcon.icns
 
+#Android ignore files
+*.iml
+.gradle/
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
+/build/
+app/build/
+/captures
+.externalNativeBuild
+.idea/
+
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
