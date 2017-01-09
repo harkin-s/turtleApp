@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = new Intent(this, GPSService.class);
+        startService(intent);
+
     }
 
     public void openMap(View view){
