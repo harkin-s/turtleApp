@@ -1,6 +1,7 @@
 package com.example.gps.app2_gps;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -17,8 +18,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.database.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -28,6 +33,7 @@ public class MapsActivity extends FragmentActivity  implements android.location.
     private FileUtility myFile;
     private GoogleMap mMap; // Might be null if Google Play services APK is not available.
     private DatabaseReference mDatabase;
+    private static final String TAG = "MapsActivity";
 
 
     @Override
@@ -95,6 +101,10 @@ public class MapsActivity extends FragmentActivity  implements android.location.
      */
     private void setUpMap() {
         final DatabaseReference ref = mDatabase.child("locations").getRef();
+        final List<LatLng> points = new ArrayList<>();
+        final Polyline line;
+        final PolylineOptions options = new PolylineOptions().width(5).color(Color.BLUE).geodesic(true);
+
 
         // Attach a listener to read the data at our posts reference
         ref.addValueEventListener(new ValueEventListener() {
@@ -111,8 +121,14 @@ public class MapsActivity extends FragmentActivity  implements android.location.
                         mMap.addMarker(mp);
                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(
                                 new LatLng(loc.latitude, loc.longitude), 16));
-
+                        points.add(new LatLng(loc.latitude, loc.longitude));
                     }
+                }
+
+                options.addAll(points);
+                mMap.addPolyline(options);
+                for (int i = 0; i < points.size(); i++) {
+                    Log.i(TAG, "List : " + points.get(i).latitude + " " + points.get(i).longitude);
                 }
                 ref.removeEventListener(this);
             }
@@ -122,15 +138,6 @@ public class MapsActivity extends FragmentActivity  implements android.location.
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-
-
-        //App 2  todo: center and zoom the map here
-        CameraUpdate center= CameraUpdateFactory.newLatLng(new LatLng(53.283912, -9.063874));
-        CameraUpdate zoom = CameraUpdateFactory.zoomTo(15);
-        mMap.moveCamera(center);
-        mMap.animateCamera(zoom);
-
-
     }
 
 
