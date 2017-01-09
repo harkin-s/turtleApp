@@ -34,7 +34,7 @@ public class GPSService extends Service implements android.location.LocationList
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         try {
             //App 2 todo: request updates here
-            lm.requestLocationUpdates(lm.NETWORK_PROVIDER,5000, 1, this);
+            lm.requestLocationUpdates(lm.NETWORK_PROVIDER,5000, 5, this);
         }
         catch (SecurityException e) {
             Log.e(TAG, "exception occured " + e.getMessage());
