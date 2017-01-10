@@ -39,11 +39,10 @@
         android:text="Steps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/count"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:textColor="#ffffff"
         android:id="@+id/textView"
-        android:layout_above="@+id/previousCount"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/count"
+        android:layout_alignLeft="@+id/previousCount"
+        android:layout_alignStart="@+id/previousCount" />
 </RelativeLayout>
