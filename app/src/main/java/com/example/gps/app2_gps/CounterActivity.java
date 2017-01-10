@@ -71,13 +71,15 @@ public class CounterActivity extends FragmentActivity implements SensorEventList
         Time curr = new Time();
 
         curr.setToNow();
-        if ((curr.hour - startTime.hour) >= 1 || first == true) {
+        curr.toMillis(true);
+        startTime.toMillis(true);
+        if (curr.toMillis(true) - startTime.toMillis(true) >= 3600000 || first == true) {
 
             if(first){
                 iSteps = (int)event.values[0];
             }
-            previousCount.append("Steps: "+ String.valueOf(event.values[0] - iSteps) + " Time: " + startTime.format("%d-%m-%Y %H:%M:%S") + "\n" );
-            CounterData obj = new CounterData(event.values[0] - iSteps , startTime.format("%d-%m-%Y %H:%M:%S"));
+            previousCount.append("Steps: "+ String.valueOf(event.values[0] - iSteps) + " Time: " + curr.format("%d-%m-%Y %H:%M:%S") + "\n" );
+            CounterData obj = new CounterData(event.values[0] - iSteps , curr.format("%d-%m-%Y %H:%M:%S"));
             mDatabase.child("counter").push().setValue(obj);
             startTime.setToNow();
             first = false;
