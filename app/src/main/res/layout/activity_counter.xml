@@ -8,17 +8,41 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#68a2ff"
     tools:context="com.example.gps.app2_gps.CounterActivity">
 
     <TextView
-        android:text="Create counter here"
+        android:text="Step Count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:id="@+id/count"
+        android:textColor="#ffffff"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="36sp" />
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="67dp"
+        android:id="@+id/previousCount"
+        android:textColor="#ffffff"
+        android:layout_marginLeft="28dp"
+        android:layout_marginStart="28dp"
+        android:layout_below="@+id/count"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="36dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="35dp"
-        android:id="@+id/textView" />
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Steps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:id="@+id/textView"
+        android:textSize="12sp"
+        android:layout_alignTop="@+id/count"
+        android:layout_alignLeft="@+id/previousCount"
+        android:layout_alignStart="@+id/previousCount" />
 </RelativeLayout>
