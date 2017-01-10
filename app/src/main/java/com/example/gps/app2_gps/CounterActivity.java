@@ -2,43 +2,46 @@ package com.example.gps.app2_gps;
 
 import android.content.Context;
 import android.hardware.*;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.Intent;
-import com.google.android.gms.drive.Permission;
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.database.*;
+import android.text.format.Time;
+import java.util.*;
 
-import java.util.Map;
 
-
-public class CounterActivity extends FragmentActivity  implements SensorEventListener{
+public class CounterActivity extends FragmentActivity implements SensorEventListener {
 
 
     private SensorManager sensorManager;
     private TextView count;
+    private TextView previousCount;
     boolean activityRunning;
+    private DatabaseReference mDatabase;
+    private Time startTime = new Time();
+    ListView listView;
+    boolean first = true;
+    private ArrayList<String> results = new ArrayList<String>();
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter);
         count = (TextView) findViewById(R.id.count);
-
+        previousCount = (TextView) findViewById(R.id.previousCount);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+
+        startTime.setToNow();
     }
 
     @Override
@@ -67,10 +70,22 @@ public class CounterActivity extends FragmentActivity  implements SensorEventLis
         if (activityRunning) {
             count.setText(String.valueOf(event.values[0]));
         }
+        Time curr = new Time();
 
+        curr.setToNow();
+        if ((curr.second - startTime.second) >= 10 || first == true) {
+
+            previousCount.append("Steps: "+String.valueOf(event.values[0]) + " Time: " + startTime.format2445() + "\n" );
+            CounterData obj = new CounterData(event.values[0], startTime.format("yyyy-MM-dd"));
+            mDatabase.child("counter").push().setValue(obj);
+            startTime.setToNow();
+            first = false;
+
+        }
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
     }
+
 }
