@@ -27,6 +27,7 @@ android {
         }
         debug {
             signingConfig signingConfigs.key
+            testCoverageEnabled = true
         }
     }
     dexOptions {

@@ -12,7 +12,7 @@
     tools:context="com.example.gps.app2_gps.CounterActivity">
 
     <TextView
-        android:text="Step Count"
+        android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -23,19 +23,6 @@
         android:textSize="36sp" />
 
     <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="67dp"
-        android:id="@+id/previousCount"
-        android:textColor="#ffffff"
-        android:layout_marginLeft="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_below="@+id/count"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
         android:text="Steps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,6 +30,17 @@
         android:id="@+id/textView"
         android:textSize="12sp"
         android:layout_alignTop="@+id/count"
-        android:layout_alignLeft="@+id/previousCount"
-        android:layout_alignStart="@+id/previousCount" />
+        android:layout_toLeftOf="@+id/button4"
+        android:layout_toStartOf="@+id/button4"
+        android:layout_marginRight="21dp"
+        android:layout_marginEnd="21dp" />
+
+    <Button
+        android:text="View Previous Steps"
+        android:layout_width="wrap_content"
+        android:onClick="openList"
+        android:layout_height="wrap_content"
+        android:id="@+id/button4"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

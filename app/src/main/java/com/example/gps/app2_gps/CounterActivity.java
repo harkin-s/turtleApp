@@ -1,11 +1,13 @@
 package com.example.gps.app2_gps;
 
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.*;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,7 +22,6 @@ public class CounterActivity extends FragmentActivity implements SensorEventList
 
     private SensorManager sensorManager;
     private TextView count;
-    private TextView previousCount;
     boolean activityRunning;
     private DatabaseReference mDatabase;
     private int iSteps;
@@ -37,7 +38,7 @@ public class CounterActivity extends FragmentActivity implements SensorEventList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter);
         count = (TextView) findViewById(R.id.count);
-        previousCount = (TextView) findViewById(R.id.previousCount);
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         startTime.setToNow();
@@ -78,7 +79,6 @@ public class CounterActivity extends FragmentActivity implements SensorEventList
             if(first){
                 iSteps = (int)event.values[0];
             }
-            previousCount.append("Steps: "+ String.valueOf(event.values[0] - iSteps) + " Time: " + curr.format("%d-%m-%Y %H:%M:%S") + "\n" );
             CounterData obj = new CounterData(event.values[0] - iSteps , curr.format("%d-%m-%Y %H:%M:%S"));
             mDatabase.child("counter").push().setValue(obj);
             startTime.setToNow();
@@ -96,6 +96,13 @@ public class CounterActivity extends FragmentActivity implements SensorEventList
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    public void openList(View view) {
+        Intent intent = new Intent(this, listView.class);
+        startActivity(intent);
+
+
     }
     protected void onStop(){
         super.onStop();
