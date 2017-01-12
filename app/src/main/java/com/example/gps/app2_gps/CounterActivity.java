@@ -75,7 +75,6 @@ public class CounterActivity extends FragmentActivity implements SensorEventList
         curr.toMillis(true);
         startTime.toMillis(true);
         if (curr.toMillis(true) - startTime.toMillis(true) >= 3600000 || first == true) {
-
             if(first){
                 iSteps = (int)event.values[0];
             }

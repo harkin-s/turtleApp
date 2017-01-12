@@ -11,14 +11,8 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.database.*;
-import android.text.format.Time;
 import java.util.*;
 
 
@@ -28,35 +22,26 @@ import java.util.*;
 
 public class listView extends FragmentActivity {
 
-    private ListView list = null;
-    public DatabaseReference mDatabase;
-    private String[] data = new String[20];
-    private long amt = 0;
 
+    public DatabaseReference mDatabase;
+    private long amt = 0;
+    private TextView text;
 
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        list = (ListView) findViewById(R.id.list);
+        text = (TextView) findViewById(R.id.textData);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, data);
-
-        list.setAdapter(adapter);
-        //showList();
+        showList();
     }
 
     public void showList() {
 
         final DatabaseReference ref = mDatabase.child("counter").getRef();
         ref.keepSynced(true);
-        FirebaseDatabase db = FirebaseDatabase.getInstance();
-
-        db.getReference().child("counter").addListenerForSingleValueEvent(new ValueEventListener() {
-
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -68,11 +53,12 @@ public class listView extends FragmentActivity {
 
                     i++;
                 }
+                //Shows the last 100 entries in the database
+                for(int a =1; a<=101;a++){
+                    String t = vals[(int)amt-a].substring(6,23);
+                    String s = vals[(int)amt-a].substring(26,39);
 
-                for(int a =0; a<=20;a++){
-                    data[a] = vals[(int)amt];
-                    amt--;
-
+                     text.append("Time: "+t +" "+ s + "\n");
                 }
 
             }
@@ -81,8 +67,6 @@ public class listView extends FragmentActivity {
 
             }
         });
-
-        data[1] = "h";
 
 
 
