@@ -62,7 +62,16 @@
             android:name=".GPSService"
             android:enabled="true"
             android:stopWithTask="true"
-            android:exported="true"></service>
+            android:exported="true">
+
+        </service>
+        <service
+            android:name=".CounterService"
+            android:enabled="true"
+            android:stopWithTask="true"
+            android:exported="true">
+
+        </service>
     </application>
 
 </manifest>

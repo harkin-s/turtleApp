@@ -56,9 +56,9 @@ public class listView extends FragmentActivity {
                 //Shows the last 100 entries in the database
                 for(int a =1; a<=101;a++){
                     String t = vals[(int)amt-a].substring(6,23);
-                    String s = vals[(int)amt-a].substring(26,39);
-
-                     text.append("Time: "+t +" "+ s + "\n");
+                    String s = vals[(int)amt-a].substring(26);
+                    String num= s.replaceAll("[^0-9]", "");
+                     text.append("Time: "+t +" Steps: "+ num + "\n");
                 }
 
             }
